@@ -7,8 +7,24 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>数独大师 100 · 从入门到地狱的百关征途</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%235E5CE6'/><text x='50' y='70' font-size='54' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>数</text></svg>">
+<script>
+// 全局错误兜底：未捕获异常时给出友好提示，便于反馈问题
+window.addEventListener('error', function () {
+  if (window.__errShown) return;
+  window.__errShown = true;
+  try {
+    var t = document.getElementById('toast');
+    if (t) {
+      t.textContent = '⚠️ 页面出了点小问题，请刷新重试；若反复出现请截图此屏反馈';
+      t.classList.remove('hidden');
+    }
+  } catch (x) {}
+}, true);
+</script>
 </head>
 <body data-theme="cloud">
 

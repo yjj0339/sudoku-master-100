@@ -1043,6 +1043,13 @@
   // 主题初始化
   document.body.dataset.theme = settings.theme || 'cloud';
 
+  // PWA：注册 Service Worker（二次打开秒开、离线可玩）
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === '127.0.0.1' || location.hostname === 'localhost')) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js').catch(function () {});
+    });
+  }
+
   // ---------------- 启动 ----------------
   window.__startLevel = function (lv) { startLevel(lv); };
   window.__getCur = function () { return cur; };

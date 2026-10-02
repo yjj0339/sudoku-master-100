@@ -1,0 +1,17 @@
+{
+  "name": "数独大师 100 · 从入门到地狱的百关征途",
+  "short_name": "数独大师",
+  "description": "100 关进阶数独闯关，AI 大师逐步讲解，每日挑战，手机电脑双端",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef0f7",
+  "theme_color": "#5e5ce6",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

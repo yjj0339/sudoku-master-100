@@ -222,6 +222,7 @@
   function saveCurrent() {
     if (!cur) return;
     saveJSON(K.current, {
+      v: 2,
       lv: cur.lv, daily: !!cur.daily, p: E.gridToString(cur.given), s: E.gridToString(cur.solution),
       c: cur.given_count, tier: cur.tier, st: cur.st,
       grid: Array.from(cur.grid), notes: cur.notes.slice(),
@@ -853,9 +854,12 @@
 
   function startLevel(lv) {
     var saved = loadJSON(K.current, null);
-    if (saved && saved.lv === lv && !saved.daily && !progress.stars[lv]) {
-      newGame({ lv: lv, p: saved.p, s: saved.s, c: saved.c, tier: saved.tier, st: saved.st }, { resumeData: saved });
-      return;
+    // 仅恢复 v2 格式且盘面完整的存档；v1 旧存档/损坏数据直接开新局
+    if (saved && saved.v === 2 && saved.lv === lv && !saved.daily && saved.p && saved.s && !progress.stars[lv]) {
+      try {
+        newGame({ lv: lv, p: saved.p, s: saved.s, c: saved.c, tier: saved.tier, st: saved.st }, { resumeData: saved });
+        return;
+      } catch (e) { /* 落入全新开局 */ }
     }
     if (lv === 100 && !progress.stars[100]) {
       openModal(

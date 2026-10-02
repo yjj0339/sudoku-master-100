@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f6f7fb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>数独大师 100 · 从入门到地狱的百关征途</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234f6ef7'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>数</text></svg>">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ 主页 ============ -->
+  <section id="screen-home" class="screen active">
+    <div class="home-hero">
+      <div class="home-logo">
+        <div class="logo-grid">
+          <span>5</span><span>·</span><span>3</span>
+          <span>·</span><span>7</span><span>·</span>
+          <span>9</span><span>·</span><span>·</span>
+        </div>
+      </div>
+      <h1>数独大师 100</h1>
+      <p class="home-sub">从入门到地狱 · 百关进阶征途</p>
+    </div>
+
+    <div class="home-actions">
+      <button id="btn-continue" class="btn btn-primary btn-big">继续闯关 · 第 <b id="continue-lv">1</b> 关</button>
+      <button id="btn-levels" class="btn btn-ghost btn-big">关卡选择</button>
+    </div>
+
+    <div class="home-stats card" id="home-stats">
+      <div class="stat"><b id="stat-cleared">0</b><span>已通关</span></div>
+      <div class="stat"><b id="stat-stars">0<small>/300</small></b><span>累计星级</span></div>
+      <div class="stat"><b id="stat-achs">0</b><span>成就</span></div>
+    </div>
+
+    <div class="home-links">
+      <button id="btn-help" class="link-btn">📖 玩法与技巧图鉴</button>
+      <button id="btn-settings" class="link-btn">⚙️ 设置</button>
+    </div>
+    <p class="home-foot">AI 大师「玄机」全程陪练 · 手机竖屏友好</p>
+  </section>
+
+  <!-- ============ 关卡选择 ============ -->
+  <section id="screen-levels" class="screen">
+    <header class="topbar">
+      <button class="icon-btn" data-back="home">←</button>
+      <div class="topbar-title">关卡选择</div>
+      <div class="topbar-right" id="levels-star-count">⭐ 0/300</div>
+    </header>
+    <div class="levels-scroll">
+      <div id="levels-grid" class="levels-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ 游戏 ============ -->
+  <section id="screen-game" class="screen">
+    <header class="topbar game-topbar">
+      <button class="icon-btn" data-back="levels">←</button>
+      <div class="game-meta">
+        <div class="game-lv" id="game-lv">第 1 关 <span class="game-tier">入门</span></div>
+        <div class="game-timer"><button id="btn-pause" class="mini-btn">⏸</button> <span id="game-time">00:00</span> <span id="game-hints" title="已用提示">💡0</span></div>
+      </div>
+      <button class="icon-btn" id="btn-restart">↻</button>
+    </header>
+
+    <div class="board-wrap">
+      <div id="board" class="board" aria-label="数独棋盘"></div>
+      <div id="pause-mask" class="pause-mask hidden">
+        <div class="pause-card">
+          <h3>休息一下</h3>
+          <p>棋盘已隐藏，点击继续</p>
+          <button id="btn-resume" class="btn btn-primary">继续游戏</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button class="tool-btn" id="tool-undo"><span class="t-ico">↩</span><span class="t-txt">撤销</span></button>
+      <button class="tool-btn" id="tool-erase"><span class="t-ico">⌫</span><span class="t-txt">擦除</span></button>
+      <button class="tool-btn" id="tool-note"><span class="t-ico">✏️</span><span class="t-txt">笔记</span></button>
+      <button class="tool-btn" id="tool-hint"><span class="t-ico">💡</span><span class="t-txt">提示</span></button>
+      <button class="tool-btn" id="tool-ai"><span class="t-ico">🧙</span><span class="t-txt">AI大师</span></button>
+    </div>
+
+    <div id="numpad" class="numpad"></div>
+    <div class="safe-bottom"></div>
+  </section>
+
+  <!-- ============ AI 大师抽屉 ============ -->
+  <div id="ai-drawer" class="ai-drawer hidden">
+    <div class="ai-panel">
+      <div class="ai-head">
+        <span class="ai-avatar">🧙‍♂️</span>
+        <div class="ai-name">玄机大师 <small>AI 数独宗师</small></div>
+        <button class="icon-btn" id="ai-close">✕</button>
+      </div>
+      <div id="ai-chat" class="ai-chat"></div>
+      <div class="ai-actions">
+        <button class="btn btn-ghost" id="ai-explain">只讲不填</button>
+        <button class="btn btn-ghost" id="ai-step">指点一步</button>
+        <button class="btn btn-primary" id="ai-auto">演示到底</button>
+      </div>
+      <div class="ai-actions2">
+        <button class="btn btn-ghost btn-sm hidden" id="ai-stop">⏹ 停止演示</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 通用模态 ============ -->
+  <div id="modal-root" class="modal-root hidden"></div>
+  <div id="toast" class="toast hidden"></div>
+</div>
+
+<script src="js/engine.js"></script>
+<script src="js/levels-data.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>

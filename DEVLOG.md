@@ -20,5 +20,12 @@
 - 100 关离线生成，难度曲线 given 50→23、maxScore 1→15；终关 23 提示/134 分。
 - v1 三坑：挖洞提示数语义（given=81-洞数）、随机盘低阶技巧为主需大候选池抓右尾、pointerdown 同步弹窗被合成 click 误关（openModal 350ms 保护）。
 
+## v2.1 稳定性（10-03，用户反馈"玩不了"）
+- **主因：v1 旧存档让 v2 崩溃**——startLevel 恢复逻辑读到 v1 格式（无 p/s 字段）parsePuzzle(undefined) 抛异常。修复：存档加 `v:2` 版本号，恢复前校验 v===2 且 p/s 完整，try-catch 兜底落回全新开局。线上模拟旧存档验证通过。
+- 兼容性：CSS 5 处 `color-mix`（2023 特性）→ 各主题静态 `--glow` 变量；8 处 `dvh` 全部加 `vh` 回退行（旧浏览器忽略新单位保留旧值）。JS 本身 ES5 风格无兼容问题。
+- PWA：manifest.json + PIL 生成图标(192/512) + sw.js（cache-first+后台刷新，CACHE 版本号需随发布递增）。断网重载验证可玩——正面解决 github.io 线路不稳。
+- 全局错误兜底：index.html head 内联 window.addEventListener('error') 显示友好 toast（捕获脚本加载失败）。
+- 教训：**升级本地存储格式必须带版本号守卫**；面向国内用户的 GH Pages 项目，PWA 缓存是网络不稳的根治手段。
+
 ## 收尾
-- [x] v1+v2 均已部署，线上 200 + MIME 正常；二维码 qr-live.png；导航主页最新卡片（v2 描述）；记忆 shudu-sudoku-master-100；手机+桌面截图 shots/。
+- [x] v1+v2+v2.1 均已部署，线上 200 + MIME 正常；二维码 qr-live.png；导航主页最新卡片（v2 描述）；记忆 shudu-sudoku-master-100；手机+桌面截图 shots/。

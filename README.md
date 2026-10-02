@@ -16,7 +16,7 @@
 
 ## 目录
 
-- `www/` 站点（index.html + css/js，零依赖）
-- `www/js/engine.js` 数独引擎：生成器、唯一解计数、13 种人类技巧求解器与评分
-- `www/js/levels-data.js` 预生成 100 关数据（由 `tools/gen-levels.js` 离线产出）
+- `index.html` + `css/` + `js/` 站点本体，零依赖
+- `js/engine.js` 数独引擎：生成器、唯一解计数、13 种人类技巧求解器与评分
+- `js/levels-data.js` 预生成 100 关数据（由 `tools/gen-levels.js` 离线产出）
 - `tools/` 生成器与 Playwright 冒烟测试（`python tools/smoke.py`，需本地 8917 端口）

@@ -1,6 +1,6 @@
 // 离线生成 100 关：种子确定性、技巧评分筛选、难度递进、终关地狱级
 // 提示数语义：given = 81 - 洞数（真正给玩家的数字个数）
-const E = require('../www/js/engine.js');
+const E = require('../js/engine.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -140,7 +140,7 @@ const out = `/* 数独大师 100 关 · 预生成关卡数据（离线产出，�
   if (typeof module !== 'undefined' && module.exports) module.exports = LEVELS;
 })(typeof window !== 'undefined' ? window : globalThis);
 `;
-fs.writeFileSync(path.join(__dirname, '../www/js/levels-data.js'), out, 'utf8');
+fs.writeFileSync(path.join(__dirname, '../js/levels-data.js'), out, 'utf8');
 
 console.log('---');
 console.log('全部关卡校验:', allOk ? '通过（唯一解 + 技巧解一致）' : '存在失败!');
@@ -150,4 +150,4 @@ levels.forEach(l => { const k = l.maxScore; dist[k] = (dist[k] || 0) + 1; });
 console.log('maxScore 分布:', JSON.stringify(dist));
 const givens = levels.map(l => l.given);
 console.log('given 范围:', Math.min(...givens), '-', Math.max(...givens));
-console.log('输出 -> www/js/levels-data.js (', data.length, '关 )');
+console.log('输出 -> js/levels-data.js (', data.length, '关 )');

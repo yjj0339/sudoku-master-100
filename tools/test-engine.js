@@ -1,5 +1,5 @@
 // 引擎自测：已知盘面的求解正确性 + 技巧探测 + 性能
-const E = require('../www/js/engine.js');
+const E = require('../js/engine.js');
 
 // 经典简单盘（Naked/Hidden Single 即可解）
 const easy = '530070000600195000098000060800060003400803001700020006060000280000419005000080079';
